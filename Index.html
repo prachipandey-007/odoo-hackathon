@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TransitOps - Smart Transport Operations</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 <body>
 
@@ -13,7 +14,7 @@
     <div id="loginPage" class="login-container">
         <div class="login-box">
             <h1>
-                <img src="icon" alt="TransitOps Logo" width="30" height="30" style="vertical-align: middle;">
+                <img src="image/logo.jpeg" alt="TransitOps Logo" width="30" height="30" style="vertical-align: middle;">
                  TransitOps
             </h1>
             <p class="subtitle">Smart Transport Operations</p>
@@ -46,14 +47,14 @@
 
         <!-- Navbar -->
         <nav class="navbar">
-            <div class="navbar-brand"> Transit<span>Ops</span></div>
+            <div class="navbar-brand">🚛 Transit<span>Ops</span></div>
             <div class="navbar-right">
                 <div class="user-info">
                     <div class="user-avatar" id="userAvatar">FM</div>
                     <span id="userName">Admin</span>
                     <span style="font-size:12px;color:var(--gray-600);" id="userRole">Fleet Manager</span>
                 </div>
-                <button class="logout-btn" onclick="logout()"></button>
+                <button class="logout-btn" onclick="logout()">🚪</button>
             </div>
         </nav>
 
@@ -61,38 +62,38 @@
             <!-- Sidebar -->
             <aside class="sidebar">
                 <div class="sidebar-item active" data-page="dashboard" onclick="navigateTo('dashboard')">
-                    <span class="icon">
-                        <img src="icon 2" alt="Dashboard" class="sidebar-icon">
-                    </span>
-                    <span>Dashboard</span>
+                <span class="icon">
+                    <img src="image/Dashboard.jpeg" alt="Dashboard" width="25" height="25" class="sidebar-icon">
+                </span>
+                <span>Dashboard</span>
                 </div>
                 <div class="sidebar-item" data-page="vehicles" onclick="navigateTo('vehicles')">
                     <span class="icon">
-                        <img src="icon 3" alt="Vehicles" class="sidebar-icon">
+                        <img src="image/vehicle.jpeg" alt="Vehicle" width="25" height="25" class="sidebar-icon">
                     </span>
                     <span>Vehicles</span>
                 </div>
                 <div class="sidebar-item" data-page="drivers" onclick="navigateTo('drivers')">
                     <span class="icon">
-                        <img src="icon 4" alt="Drivers" class="sidebar-icon">
+                        <img src="image/drivers.jpeg" alt="Drivers" width="25" height="25" class="sidebar-icon">
                     </span>
                     <span>Drivers</span>
                 </div>
                 <div class="sidebar-item" data-page="trips" onclick="navigateTo('trips')">
                     <span class="icon">
-                        <img src="icon 5" alt="Trips" class="sidebar-icon">
+                        <img src="image/trips.jpeg" alt="Trips" width="25" height="25" class="sidebar-icon">
                     </span>
                     <span>Trips</span>
                 </div>
                 <div class="sidebar-item" data-page="maintenance" onclick="navigateTo('maintenance')">
                     <span class="icon">
-                        <img src="icon 6" alt="Maintenance" class="sidebar-icon">
+                        <img src="image/maintenance.jpeg" alt="Maintenance" width="25" height="25" class="sidebar-icon">
                     </span>
                     <span>Maintenance</span>
                 </div>
                 <div class="sidebar-item" data-page="reports" onclick="navigateTo('reports')">
                     <span class="icon">
-                        <img src="icon 7" alt="Reports" class="sidebar-icon">
+                        <img src="image/results.jpeg" alt="Reports" width="25" height="25" class="sidebar-icon">
                     </span>
                     <span>Reports</span>
                 </div>
@@ -106,7 +107,7 @@
 
                 <!-- DASHBOARD -->
                 <div id="page-dashboard" class="page-section active">
-                    <h2 style="margin-bottom:20px;"> Dashboard</h2>
+                    <h2 style="margin-bottom:20px;">📊 Dashboard</h2>
                     <div class="kpi-grid" id="kpiGrid">
                         <!-- KPIs rendered by JS -->
                     </div>
@@ -122,7 +123,7 @@
                 <div id="page-vehicles" class="page-section">
                     <div class="table-container">
                         <div class="table-header">
-                            <h3> Vehicle Registry</h3>
+                            <h3>🚗 Vehicle Registry</h3>
                             <div class="table-actions">
                                 <button class="btn btn-primary btn-sm" onclick="openModal('vehicleModal')">+ Add Vehicle</button>
                             </div>
@@ -152,7 +153,7 @@
                 <div id="page-drivers" class="page-section">
                     <div class="table-container">
                         <div class="table-header">
-                            <h3> Driver Management</h3>
+                            <h3>👨‍✈️ Driver Management</h3>
                             <div class="table-actions">
                                 <button class="btn btn-primary btn-sm" onclick="openModal('driverModal')">+ Add Driver</button>
                             </div>
@@ -182,7 +183,7 @@
                 <div id="page-trips" class="page-section">
                     <div class="table-container">
                         <div class="table-header">
-                            <h3> Trip Management</h3>
+                            <h3>📦 Trip Management</h3>
                             <div class="table-actions">
                                 <button class="btn btn-primary btn-sm" onclick="openModal('tripModal')">+ Create Trip</button>
                             </div>
@@ -275,7 +276,7 @@
         </div>
     </div>
 
-    <!--  MODALS  -->
+    <!-- MODALS -->
 
     <!-- Vehicle Modal -->
     <div id="vehicleModal" class="modal-overlay">
@@ -500,6 +501,6 @@
         </div>
     </div>
 
-   <script src="logic.js"></script>
+   <script src="script.js"></script>
 </body>
 </html>
