@@ -22,7 +22,7 @@
         // ===== AUTHENTICATION =====
         // Default users for demo
         const DEFAULT_USERS = [
-            { email: 'service.com', password: 'service123', role: 'service', name: 'Admin User' }
+            { email: 'service@git.com', password: 'service123', role: 'service', name: 'Admin User' }
         ];
 
         // Initialize users if not exists
