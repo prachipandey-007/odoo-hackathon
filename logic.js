@@ -1,4 +1,5 @@
-// ================================================================
+ 
+        // ================================================================
         // ===== JAVASCRIPT - COMPLETE APPLICATION LOGIC =====
         // ================================================================
 
@@ -22,7 +23,10 @@
         // ===== AUTHENTICATION =====
         // Default users for demo
         const DEFAULT_USERS = [
-            { email: 'service@git.com', password: 'service123', role: 'service', name: 'Admin User' }
+            { email: 'admin@transitops.com', password: 'admin123', role: 'fleet_manager', name: 'Admin User' },
+            { email: 'driver@transitops.com', password: 'driver123', role: 'driver', name: 'Driver User' },
+            { email: 'safety@transitops.com', password: 'safety123', role: 'safety_officer', name: 'Safety Officer' },
+            { email: 'finance@transitops.com', password: 'finance123', role: 'financial_analyst', name: 'Finance Analyst' }
         ];
 
         // Initialize users if not exists
