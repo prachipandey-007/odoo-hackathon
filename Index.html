@@ -1,155 +1,489 @@
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>TransitOps</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <main id="loginView" class="login-shell">
-      <section class="login-panel" aria-labelledby="loginTitle">
-        <div>
-          <p class="eyebrow">Smart Transport Operations</p>
-          <h1 id="loginTitle">TransitOps</h1>
-          <p class="lede">Fleet, driver, dispatch, maintenance, fuel, and expense control in one operations console.</p>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TransitOps - Smart Transport Operations</title>
+    <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+
+    <!-- ===== LOGIN PAGE ===== -->
+    <div id="loginPage" class="login-container">
+        <div class="login-box">
+            <h1>🚛 TransitOps</h1>
+            <p class="subtitle">Smart Transport Operations</p>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" placeholder="admin@transitops.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginRole">Role</label>
+                    <select id="loginRole">
+                        <option value="fleet_manager">Fleet Manager</option>
+                        <option value="driver">Driver</option>
+                        <option value="safety_officer">Safety Officer</option>
+                        <option value="financial_analyst">Financial Analyst</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Sign In</button>
+                <div id="loginError" class="alert alert-error" style="margin-top:12px;"></div>
+            </form>
         </div>
-        <form id="loginForm" class="form-grid">
-          <label>Email
-            <input id="loginEmail" type="email" value="manager@transitops.test" required />
-          </label>
-          <label>Password
-            <input id="loginPassword" type="password" value="demo123" required />
-          </label>
-          <button class="primary full" type="submit">Sign In</button>
-          <p class="hint">Demo users: manager, driver, safety, finance at transitops.test. Password: demo123.</p>
-        </form>
-      </section>
-    </main>
-
-    <div id="appView" class="app-shell hidden">
-      <aside class="sidebar">
-        <div class="brand">
-          <span class="brand-mark">TO</span>
-          <div>
-            <strong>TransitOps</strong>
-            <small id="roleBadge">Fleet Manager</small>
-          </div>
-        </div>
-        <nav class="nav-list" aria-label="Main">
-          <button class="nav-link active" data-tab="dashboard">Dashboard</button>
-          <button class="nav-link" data-tab="vehicles">Vehicles</button>
-          <button class="nav-link" data-tab="drivers">Drivers</button>
-          <button class="nav-link" data-tab="trips">Trips</button>
-          <button class="nav-link" data-tab="maintenance">Maintenance</button>
-          <button class="nav-link" data-tab="expenses">Fuel & Expenses</button>
-          <button class="nav-link" data-tab="reports">Reports</button>
-        </nav>
-        <div class="sidebar-footer">
-          <button id="darkToggle" class="ghost" type="button">Dark Mode</button>
-          <button id="logoutButton" class="ghost" type="button">Log Out</button>
-        </div>
-      </aside>
-
-      <section class="workspace">
-        <header class="topbar">
-          <div>
-            <p class="eyebrow">Operations Console</p>
-            <h2 id="pageTitle">Dashboard</h2>
-          </div>
-          <div class="top-actions">
-            <input id="globalSearch" type="search" placeholder="Search fleet, drivers, trips" />
-            <button id="seedWorkflow" class="secondary" type="button">Run Example Workflow</button>
-          </div>
-        </header>
-
-        <div id="toast" class="toast hidden" role="status"></div>
-
-        <section id="dashboard" class="tab-panel active">
-          <div class="filters">
-            <select id="filterType"><option value="">All vehicle types</option></select>
-            <select id="filterStatus"><option value="">All statuses</option></select>
-            <select id="filterRegion"><option value="">All regions</option></select>
-          </div>
-          <div id="kpiGrid" class="kpi-grid"></div>
-          <div class="two-column">
-            <section class="panel">
-              <div class="panel-head"><h3>Fleet Mix</h3></div>
-              <div id="fleetChart" class="bar-chart"></div>
-            </section>
-            <section class="panel">
-              <div class="panel-head"><h3>Alerts</h3></div>
-              <div id="alertsList" class="list"></div>
-            </section>
-          </div>
-        </section>
-
-        <section id="vehicles" class="tab-panel">
-          <div class="section-head">
-            <h3>Vehicle Registry</h3>
-            <button class="primary" data-open="vehicleModal" type="button">Add Vehicle</button>
-          </div>
-          <div class="table-wrap"><table><thead><tr><th>Registration</th><th>Vehicle</th><th>Type</th><th>Capacity</th><th>Odometer</th><th>Region</th><th>Status</th><th></th></tr></thead><tbody id="vehiclesTable"></tbody></table></div>
-        </section>
-
-        <section id="drivers" class="tab-panel">
-          <div class="section-head">
-            <h3>Driver Management</h3>
-            <button class="primary" data-open="driverModal" type="button">Add Driver</button>
-          </div>
-          <div class="table-wrap"><table><thead><tr><th>Name</th><th>License</th><th>Category</th><th>Expiry</th><th>Contact</th><th>Safety</th><th>Status</th><th></th></tr></thead><tbody id="driversTable"></tbody></table></div>
-        </section>
-
-        <section id="trips" class="tab-panel">
-          <div class="section-head">
-            <h3>Trip Management</h3>
-            <button class="primary" data-open="tripModal" type="button">Create Trip</button>
-          </div>
-          <div id="tripCards" class="card-grid"></div>
-        </section>
-
-        <section id="maintenance" class="tab-panel">
-          <div class="section-head">
-            <h3>Maintenance Log</h3>
-            <button class="primary" data-open="maintenanceModal" type="button">Add Maintenance</button>
-          </div>
-          <div id="maintenanceCards" class="card-grid"></div>
-        </section>
-
-        <section id="expenses" class="tab-panel">
-          <div class="section-head">
-            <h3>Fuel & Expense Management</h3>
-            <div class="button-row">
-              <button class="primary" data-open="fuelModal" type="button">Add Fuel</button>
-              <button class="secondary" data-open="expenseModal" type="button">Add Expense</button>
-            </div>
-          </div>
-          <div class="two-column">
-            <section class="panel"><div class="panel-head"><h3>Fuel Logs</h3></div><div id="fuelList" class="list"></div></section>
-            <section class="panel"><div class="panel-head"><h3>Expenses</h3></div><div id="expenseList" class="list"></div></section>
-          </div>
-        </section>
-
-        <section id="reports" class="tab-panel">
-          <div class="section-head">
-            <h3>Reports & Analytics</h3>
-            <div class="button-row">
-              <button id="exportCsv" class="secondary" type="button">Export CSV</button>
-              <button id="exportPdf" class="secondary" type="button">PDF Export</button>
-            </div>
-          </div>
-          <div id="reportGrid" class="report-grid"></div>
-        </section>
-      </section>
     </div>
 
-    <dialog id="vehicleModal"><form method="dialog" id="vehicleForm" class="modal-form"><h3>Add Vehicle</h3><div class="form-grid"><input name="registration" placeholder="Registration number" required /><input name="name" placeholder="Vehicle name/model" required /><select name="type"><option>Van</option><option>Truck</option><option>Mini Truck</option><option>Reefer</option></select><input name="capacity" type="number" placeholder="Max load kg" required /><input name="odometer" type="number" placeholder="Odometer km" required /><input name="cost" type="number" placeholder="Acquisition cost" required /><input name="region" placeholder="Region" required /><select name="status"><option>Available</option><option>On Trip</option><option>In Shop</option><option>Retired</option></select></div><div class="modal-actions"><button class="ghost" value="cancel">Cancel</button><button class="primary" value="default">Save</button></div></form></dialog>
-    <dialog id="driverModal"><form method="dialog" id="driverForm" class="modal-form"><h3>Add Driver</h3><div class="form-grid"><input name="name" placeholder="Driver name" required /><input name="license" placeholder="License number" required /><select name="category"><option>LMV</option><option>HMV</option><option>Commercial</option></select><input name="expiry" type="date" required /><input name="contact" placeholder="Contact number" required /><input name="score" type="number" min="0" max="100" placeholder="Safety score" required /><select name="status"><option>Available</option><option>On Trip</option><option>Off Duty</option><option>Suspended</option></select></div><div class="modal-actions"><button class="ghost" value="cancel">Cancel</button><button class="primary" value="default">Save</button></div></form></dialog>
-    <dialog id="tripModal"><form method="dialog" id="tripForm" class="modal-form"><h3>Create Trip</h3><div class="form-grid"><input name="source" placeholder="Source" required /><input name="destination" placeholder="Destination" required /><select name="vehicleId" id="tripVehicle"></select><select name="driverId" id="tripDriver"></select><input name="cargo" type="number" placeholder="Cargo weight kg" required /><input name="distance" type="number" placeholder="Planned distance km" required /><input name="revenue" type="number" placeholder="Expected revenue" required /></div><div class="modal-actions"><button class="ghost" value="cancel">Cancel</button><button class="primary" value="default">Save Draft</button></div></form></dialog>
-    <dialog id="completeTripModal"><form method="dialog" id="completeTripForm" class="modal-form"><h3>Complete Trip</h3><input type="hidden" name="tripId" /><div class="form-grid"><input name="finalOdometer" type="number" placeholder="Final odometer" required /><input name="fuelLiters" type="number" step="0.1" placeholder="Fuel consumed liters" required /><input name="fuelCost" type="number" placeholder="Fuel cost" required /></div><div class="modal-actions"><button class="ghost" value="cancel">Cancel</button><button class="primary" value="default">Complete</button></div></form></dialog>
-    <dialog id="maintenanceModal"><form method="dialog" id="maintenanceForm" class="modal-form"><h3>Add Maintenance</h3><div class="form-grid"><select name="vehicleId" id="maintenanceVehicle"></select><input name="type" placeholder="Maintenance type" required /><input name="cost" type="number" placeholder="Cost" required /><input name="date" type="date" required /></div><div class="modal-actions"><button class="ghost" value="cancel">Cancel</button><button class="primary" value="default">Create Active Log</button></div></form></dialog>
-    <dialog id="fuelModal"><form method="dialog" id="fuelForm" class="modal-form"><h3>Add Fuel Log</h3><div class="form-grid"><select name="vehicleId" id="fuelVehicle"></select><input name="liters" type="number" step="0.1" placeholder="Liters" required /><input name="cost" type="number" placeholder="Cost" required /><input name="date" type="date" required /></div><div class="modal-actions"><button class="ghost" value="cancel">Cancel</button><button class="primary" value="default">Save</button></div></form></dialog>
-    <dialog id="expenseModal"><form method="dialog" id="expenseForm" class="modal-form"><h3>Add Expense</h3><div class="form-grid"><select name="vehicleId" id="expenseVehicle"></select><select name="category"><option>Toll</option><option>Maintenance</option><option>Permit</option><option>Other</option></select><input name="amount" type="number" placeholder="Amount" required /><input name="date" type="date" required /></div><div class="modal-actions"><button class="ghost" value="cancel">Cancel</button><button class="primary" value="default">Save</button></div></form></dialog>
+    <!-- ===== MAIN APP ===== -->
+    <div id="appContainer" class="app-container">
 
-    <script src="app.js"></script>
-  </body>
+        <!-- Navbar -->
+        <nav class="navbar">
+            <div class="navbar-brand">🚛 Transit<span>Ops</span></div>
+            <div class="navbar-right">
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">FM</div>
+                    <span id="userName">Admin</span>
+                    <span style="font-size:12px;color:var(--gray-600);" id="userRole">Fleet Manager</span>
+                </div>
+                <button class="logout-btn" onclick="logout()">🚪</button>
+            </div>
+        </nav>
+
+        <div class="main-layout">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-item active" data-page="dashboard" onclick="navigateTo('dashboard')">
+                    <span class="icon">📊</span>
+                    <span>Dashboard</span>
+                </div>
+                <div class="sidebar-item" data-page="vehicles" onclick="navigateTo('vehicles')">
+                    <span class="icon">🚗</span>
+                    <span>Vehicles</span>
+                </div>
+                <div class="sidebar-item" data-page="drivers" onclick="navigateTo('drivers')">
+                    <span class="icon">👨‍✈️</span>
+                    <span>Drivers</span>
+                </div>
+                <div class="sidebar-item" data-page="trips" onclick="navigateTo('trips')">
+                    <span class="icon">📦</span>
+                    <span>Trips</span>
+                </div>
+                <div class="sidebar-item" data-page="maintenance" onclick="navigateTo('maintenance')">
+                    <span class="icon">🔧</span>
+                    <span>Maintenance</span>
+                </div>
+                <div class="sidebar-item" data-page="reports" onclick="navigateTo('reports')">
+                    <span class="icon">📈</span>
+                    <span>Reports</span>
+                </div>
+            </aside>
+
+            <!-- Content -->
+            <main class="content">
+
+                <!-- Alert Messages -->
+                <div id="alertMessage" class="alert"></div>
+
+                <!-- ===== DASHBOARD ===== -->
+                <div id="page-dashboard" class="page-section active">
+                    <h2 style="margin-bottom:20px;">📊 Dashboard</h2>
+                    <div class="kpi-grid" id="kpiGrid">
+                        <!-- KPIs rendered by JS -->
+                    </div>
+                    <div style="background:white;padding:20px;border-radius:var(--radius);box-shadow:var(--shadow);">
+                        <h4 style="margin-bottom:12px;">Fleet Status Overview</h4>
+                        <div id="fleetChart" style="height:200px;display:flex;align-items:flex-end;gap:20px;padding:20px 0;">
+                            <!-- Chart rendered by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== VEHICLES ===== -->
+                <div id="page-vehicles" class="page-section">
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h3>🚗 Vehicle Registry</h3>
+                            <div class="table-actions">
+                                <button class="btn btn-primary btn-sm" onclick="openModal('vehicleModal')">+ Add Vehicle</button>
+                            </div>
+                        </div>
+                        <div style="overflow-x:auto;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Registration</th>
+                                        <th>Name/Model</th>
+                                        <th>Type</th>
+                                        <th>Capacity (kg)</th>
+                                        <th>Odometer</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="vehicleTableBody">
+                                    <!-- Rendered by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== DRIVERS ===== -->
+                <div id="page-drivers" class="page-section">
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h3>👨‍✈️ Driver Management</h3>
+                            <div class="table-actions">
+                                <button class="btn btn-primary btn-sm" onclick="openModal('driverModal')">+ Add Driver</button>
+                            </div>
+                        </div>
+                        <div style="overflow-x:auto;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>License #</th>
+                                        <th>Category</th>
+                                        <th>License Expiry</th>
+                                        <th>Safety Score</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="driverTableBody">
+                                    <!-- Rendered by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== TRIPS ===== -->
+                <div id="page-trips" class="page-section">
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h3>📦 Trip Management</h3>
+                            <div class="table-actions">
+                                <button class="btn btn-primary btn-sm" onclick="openModal('tripModal')">+ Create Trip</button>
+                            </div>
+                        </div>
+                        <div style="overflow-x:auto;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Vehicle</th>
+                                        <th>Driver</th>
+                                        <th>Source → Destination</th>
+                                        <th>Cargo (kg)</th>
+                                        <th>Distance</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tripTableBody">
+                                    <!-- Rendered by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== MAINTENANCE ===== -->
+                <div id="page-maintenance" class="page-section">
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h3>🔧 Maintenance Logs</h3>
+                            <div class="table-actions">
+                                <button class="btn btn-primary btn-sm" onclick="openModal('maintenanceModal')">+ New Maintenance</button>
+                            </div>
+                        </div>
+                        <div style="overflow-x:auto;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Vehicle</th>
+                                        <th>Type</th>
+                                        <th>Description</th>
+                                        <th>Cost ($)</th>
+                                        <th>Scheduled</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="maintenanceTableBody">
+                                    <!-- Rendered by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== REPORTS ===== -->
+                <div id="page-reports" class="page-section">
+                    <h2 style="margin-bottom:20px;">📈 Reports & Analytics</h2>
+                    <div class="kpi-grid" style="margin-bottom:24px;">
+                        <div class="kpi-card">
+                            <div class="label">Fuel Efficiency</div>
+                            <div class="value" id="fuelEfficiency">--</div>
+                            <div class="trend">km/liter</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="label">Fleet Utilization</div>
+                            <div class="value" id="fleetUtilizationReport">--</div>
+                            <div class="trend">% of fleet active</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="label">Operational Cost</div>
+                            <div class="value" id="operationalCost">--</div>
+                            <div class="trend">Total expenses</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="label">Vehicle ROI</div>
+                            <div class="value" id="vehicleROI">--</div>
+                            <div class="trend">Return on investment</div>
+                        </div>
+                    </div>
+                    <div style="background:white;padding:20px;border-radius:var(--radius);box-shadow:var(--shadow);">
+                        <h4 style="margin-bottom:12px;">Trip Activity</h4>
+                        <div id="tripActivityChart" style="height:150px;display:flex;align-items:flex-end;gap:12px;padding:20px 0;">
+                            <!-- Chart rendered by JS -->
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- ===== MODALS ===== -->
+
+    <!-- Vehicle Modal -->
+    <div id="vehicleModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="vehicleModalTitle">Add Vehicle</h3>
+                <button class="modal-close" onclick="closeModal('vehicleModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="vehicleForm">
+                    <input type="hidden" id="vehicleFormId">
+                    <div class="form-group">
+                        <label>Registration Number</label>
+                        <input type="text" id="vRegNumber" placeholder="e.g., VAN-001" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Vehicle Name</label>
+                        <input type="text" id="vName" placeholder="e.g., Mercedes Sprinter" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Model</label>
+                        <input type="text" id="vModel" placeholder="e.g., 2024" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Type</label>
+                        <select id="vType">
+                            <option value="Truck">Truck</option>
+                            <option value="Van">Van</option>
+                            <option value="Bus">Bus</option>
+                            <option value="Car">Car</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Max Load Capacity (kg)</label>
+                        <input type="number" id="vCapacity" placeholder="e.g., 500" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Odometer (km)</label>
+                        <input type="number" id="vOdometer" placeholder="e.g., 15000" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Acquisition Cost ($)</label>
+                        <input type="number" id="vCost" placeholder="e.g., 45000" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select id="vStatus">
+                            <option value="Available">Available</option>
+                            <option value="On Trip">On Trip</option>
+                            <option value="In Shop">In Shop</option>
+                            <option value="Retired">Retired</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" style="background:var(--gray-200);" onclick="closeModal('vehicleModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveVehicle()">Save Vehicle</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Driver Modal -->
+    <div id="driverModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="driverModalTitle">Add Driver</h3>
+                <button class="modal-close" onclick="closeModal('driverModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="driverForm">
+                    <input type="hidden" id="driverFormId">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="dName" placeholder="e.g., Alex Johnson" required>
+                    </div>
+                    <div class="form-group">
+                        <label>License Number</label>
+                        <input type="text" id="dLicense" placeholder="e.g., DL-2024-001" required>
+                    </div>
+                    <div class="form-group">
+                        <label>License Category</label>
+                        <select id="dCategory">
+                            <option value="A">A - Motorcycle</option>
+                            <option value="B">B - Car</option>
+                            <option value="C">C - Truck</option>
+                            <option value="D">D - Bus</option>
+                            <option value="E">E - Heavy</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>License Expiry Date</label>
+                        <input type="date" id="dExpiry" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Contact Number</label>
+                        <input type="text" id="dContact" placeholder="e.g., +1-555-0123" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Safety Score (0-100)</label>
+                        <input type="number" id="dSafety" placeholder="e.g., 95" value="100" min="0" max="100">
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select id="dStatus">
+                            <option value="Available">Available</option>
+                            <option value="On Trip">On Trip</option>
+                            <option value="Off Duty">Off Duty</option>
+                            <option value="Suspended">Suspended</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" style="background:var(--gray-200);" onclick="closeModal('driverModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveDriver()">Save Driver</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trip Modal -->
+    <div id="tripModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="tripModalTitle">Create Trip</h3>
+                <button class="modal-close" onclick="closeModal('tripModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="tripForm">
+                    <input type="hidden" id="tripFormId">
+                    <div class="form-group">
+                        <label>Vehicle</label>
+                        <select id="tVehicle" required>
+                            <option value="">-- Select Vehicle --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Driver</label>
+                        <select id="tDriver" required>
+                            <option value="">-- Select Driver --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Source</label>
+                        <input type="text" id="tSource" placeholder="e.g., Warehouse A" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Destination</label>
+                        <input type="text" id="tDestination" placeholder="e.g., Retail Store B" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Cargo Weight (kg)</label>
+                        <input type="number" id="tCargo" placeholder="e.g., 450" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Planned Distance (km)</label>
+                        <input type="number" id="tDistance" placeholder="e.g., 120" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select id="tStatus">
+                            <option value="Draft">Draft</option>
+                            <option value="Dispatched">Dispatched</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" style="background:var(--gray-200);" onclick="closeModal('tripModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveTrip()">Save Trip</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Maintenance Modal -->
+    <div id="maintenanceModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="maintenanceModalTitle">New Maintenance Record</h3>
+                <button class="modal-close" onclick="closeModal('maintenanceModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="maintenanceForm">
+                    <input type="hidden" id="maintenanceFormId">
+                    <div class="form-group">
+                        <label>Vehicle</label>
+                        <select id="mVehicle" required>
+                            <option value="">-- Select Vehicle --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Maintenance Type</label>
+                        <input type="text" id="mType" placeholder="e.g., Oil Change" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <input type="text" id="mDesc" placeholder="e.g., Regular maintenance">
+                    </div>
+                    <div class="form-group">
+                        <label>Cost ($)</label>
+                        <input type="number" id="mCost" placeholder="e.g., 150" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Scheduled Date</label>
+                        <input type="date" id="mDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select id="mStatus">
+                            <option value="Active">Active</option>
+                            <option value="Closed">Closed</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" style="background:var(--gray-200);" onclick="closeModal('maintenanceModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveMaintenance()">Save Record</button>
+            </div>
+        </div>
+    </div>
+
+   <script src="app.js"></script>
+</body>
 </html>
