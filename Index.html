@@ -1,0 +1,155 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TransitOps</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main id="loginView" class="login-shell">
+      <section class="login-panel" aria-labelledby="loginTitle">
+        <div>
+          <p class="eyebrow">Smart Transport Operations</p>
+          <h1 id="loginTitle">TransitOps</h1>
+          <p class="lede">Fleet, driver, dispatch, maintenance, fuel, and expense control in one operations console.</p>
+        </div>
+        <form id="loginForm" class="form-grid">
+          <label>Email
+            <input id="loginEmail" type="email" value="manager@transitops.test" required />
+          </label>
+          <label>Password
+            <input id="loginPassword" type="password" value="demo123" required />
+          </label>
+          <button class="primary full" type="submit">Sign In</button>
+          <p class="hint">Demo users: manager, driver, safety, finance at transitops.test. Password: demo123.</p>
+        </form>
+      </section>
+    </main>
+
+    <div id="appView" class="app-shell hidden">
+      <aside class="sidebar">
+        <div class="brand">
+          <span class="brand-mark">TO</span>
+          <div>
+            <strong>TransitOps</strong>
+            <small id="roleBadge">Fleet Manager</small>
+          </div>
+        </div>
+        <nav class="nav-list" aria-label="Main">
+          <button class="nav-link active" data-tab="dashboard">Dashboard</button>
+          <button class="nav-link" data-tab="vehicles">Vehicles</button>
+          <button class="nav-link" data-tab="drivers">Drivers</button>
+          <button class="nav-link" data-tab="trips">Trips</button>
+          <button class="nav-link" data-tab="maintenance">Maintenance</button>
+          <button class="nav-link" data-tab="expenses">Fuel & Expenses</button>
+          <button class="nav-link" data-tab="reports">Reports</button>
+        </nav>
+        <div class="sidebar-footer">
+          <button id="darkToggle" class="ghost" type="button">Dark Mode</button>
+          <button id="logoutButton" class="ghost" type="button">Log Out</button>
+        </div>
+      </aside>
+
+      <section class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Operations Console</p>
+            <h2 id="pageTitle">Dashboard</h2>
+          </div>
+          <div class="top-actions">
+            <input id="globalSearch" type="search" placeholder="Search fleet, drivers, trips" />
+            <button id="seedWorkflow" class="secondary" type="button">Run Example Workflow</button>
+          </div>
+        </header>
+
+        <div id="toast" class="toast hidden" role="status"></div>
+
+        <section id="dashboard" class="tab-panel active">
+          <div class="filters">
+            <select id="filterType"><option value="">All vehicle types</option></select>
+            <select id="filterStatus"><option value="">All statuses</option></select>
+            <select id="filterRegion"><option value="">All regions</option></select>
+          </div>
+          <div id="kpiGrid" class="kpi-grid"></div>
+          <div class="two-column">
+            <section class="panel">
+              <div class="panel-head"><h3>Fleet Mix</h3></div>
+              <div id="fleetChart" class="bar-chart"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-head"><h3>Alerts</h3></div>
+              <div id="alertsList" class="list"></div>
+            </section>
+          </div>
+        </section>
+
+        <section id="vehicles" class="tab-panel">
+          <div class="section-head">
+            <h3>Vehicle Registry</h3>
+            <button class="primary" data-open="vehicleModal" type="button">Add Vehicle</button>
+          </div>
+          <div class="table-wrap"><table><thead><tr><th>Registration</th><th>Vehicle</th><th>Type</th><th>Capacity</th><th>Odometer</th><th>Region</th><th>Status</th><th></th></tr></thead><tbody id="vehiclesTable"></tbody></table></div>
+        </section>
+
+        <section id="drivers" class="tab-panel">
+          <div class="section-head">
+            <h3>Driver Management</h3>
+            <button class="primary" data-open="driverModal" type="button">Add Driver</button>
+          </div>
+          <div class="table-wrap"><table><thead><tr><th>Name</th><th>License</th><th>Category</th><th>Expiry</th><th>Contact</th><th>Safety</th><th>Status</th><th></th></tr></thead><tbody id="driversTable"></tbody></table></div>
+        </section>
+
+        <section id="trips" class="tab-panel">
+          <div class="section-head">
+            <h3>Trip Management</h3>
+            <button class="primary" data-open="tripModal" type="button">Create Trip</button>
+          </div>
+          <div id="tripCards" class="card-grid"></div>
+        </section>
+
+        <section id="maintenance" class="tab-panel">
+          <div class="section-head">
+            <h3>Maintenance Log</h3>
+            <button class="primary" data-open="maintenanceModal" type="button">Add Maintenance</button>
+          </div>
+          <div id="maintenanceCards" class="card-grid"></div>
+        </section>
+
+        <section id="expenses" class="tab-panel">
+          <div class="section-head">
+            <h3>Fuel & Expense Management</h3>
+            <div class="button-row">
+              <button class="primary" data-open="fuelModal" type="button">Add Fuel</button>
+              <button class="secondary" data-open="expenseModal" type="button">Add Expense</button>
+            </div>
+          </div>
+          <div class="two-column">
+            <section class="panel"><div class="panel-head"><h3>Fuel Logs</h3></div><div id="fuelList" class="list"></div></section>
+            <section class="panel"><div class="panel-head"><h3>Expenses</h3></div><div id="expenseList" class="list"></div></section>
+          </div>
+        </section>
+
+        <section id="reports" class="tab-panel">
+          <div class="section-head">
+            <h3>Reports & Analytics</h3>
+            <div class="button-row">
+              <button id="exportCsv" class="secondary" type="button">Export CSV</button>
+              <button id="exportPdf" class="secondary" type="button">PDF Export</button>
+            </div>
+          </div>
+          <div id="reportGrid" class="report-grid"></div>
+        </section>
+      </section>
+    </div>
+
+    <dialog id="vehicleModal"><form method="dialog" id="vehicleForm" class="modal-form"><h3>Add Vehicle</h3><div class="form-grid"><input name="registration" placeholder="Registration number" required /><input name="name" placeholder="Vehicle name/model" required /><select name="type"><option>Van</option><option>Truck</option><option>Mini Truck</option><option>Reefer</option></select><input name="capacity" type="number" placeholder="Max load kg" required /><input name="odometer" type="number" placeholder="Odometer km" required /><input name="cost" type="number" placeholder="Acquisition cost" required /><input name="region" placeholder="Region" required /><select name="status"><option>Available</option><option>On Trip</option><option>In Shop</option><option>Retired</option></select></div><div class="modal-actions"><button class="ghost" value="cancel">Cancel</button><button class="primary" value="default">Save</button></div></form></dialog>
+    <dialog id="driverModal"><form method="dialog" id="driverForm" class="modal-form"><h3>Add Driver</h3><div class="form-grid"><input name="name" placeholder="Driver name" required /><input name="license" placeholder="License number" required /><select name="category"><option>LMV</option><option>HMV</option><option>Commercial</option></select><input name="expiry" type="date" required /><input name="contact" placeholder="Contact number" required /><input name="score" type="number" min="0" max="100" placeholder="Safety score" required /><select name="status"><option>Available</option><option>On Trip</option><option>Off Duty</option><option>Suspended</option></select></div><div class="modal-actions"><button class="ghost" value="cancel">Cancel</button><button class="primary" value="default">Save</button></div></form></dialog>
+    <dialog id="tripModal"><form method="dialog" id="tripForm" class="modal-form"><h3>Create Trip</h3><div class="form-grid"><input name="source" placeholder="Source" required /><input name="destination" placeholder="Destination" required /><select name="vehicleId" id="tripVehicle"></select><select name="driverId" id="tripDriver"></select><input name="cargo" type="number" placeholder="Cargo weight kg" required /><input name="distance" type="number" placeholder="Planned distance km" required /><input name="revenue" type="number" placeholder="Expected revenue" required /></div><div class="modal-actions"><button class="ghost" value="cancel">Cancel</button><button class="primary" value="default">Save Draft</button></div></form></dialog>
+    <dialog id="completeTripModal"><form method="dialog" id="completeTripForm" class="modal-form"><h3>Complete Trip</h3><input type="hidden" name="tripId" /><div class="form-grid"><input name="finalOdometer" type="number" placeholder="Final odometer" required /><input name="fuelLiters" type="number" step="0.1" placeholder="Fuel consumed liters" required /><input name="fuelCost" type="number" placeholder="Fuel cost" required /></div><div class="modal-actions"><button class="ghost" value="cancel">Cancel</button><button class="primary" value="default">Complete</button></div></form></dialog>
+    <dialog id="maintenanceModal"><form method="dialog" id="maintenanceForm" class="modal-form"><h3>Add Maintenance</h3><div class="form-grid"><select name="vehicleId" id="maintenanceVehicle"></select><input name="type" placeholder="Maintenance type" required /><input name="cost" type="number" placeholder="Cost" required /><input name="date" type="date" required /></div><div class="modal-actions"><button class="ghost" value="cancel">Cancel</button><button class="primary" value="default">Create Active Log</button></div></form></dialog>
+    <dialog id="fuelModal"><form method="dialog" id="fuelForm" class="modal-form"><h3>Add Fuel Log</h3><div class="form-grid"><select name="vehicleId" id="fuelVehicle"></select><input name="liters" type="number" step="0.1" placeholder="Liters" required /><input name="cost" type="number" placeholder="Cost" required /><input name="date" type="date" required /></div><div class="modal-actions"><button class="ghost" value="cancel">Cancel</button><button class="primary" value="default">Save</button></div></form></dialog>
+    <dialog id="expenseModal"><form method="dialog" id="expenseForm" class="modal-form"><h3>Add Expense</h3><div class="form-grid"><select name="vehicleId" id="expenseVehicle"></select><select name="category"><option>Toll</option><option>Maintenance</option><option>Permit</option><option>Other</option></select><input name="amount" type="number" placeholder="Amount" required /><input name="date" type="date" required /></div><div class="modal-actions"><button class="ghost" value="cancel">Cancel</button><button class="primary" value="default">Save</button></div></form></dialog>
+
+    <script src="app.js"></script>
+  </body>
+</html>
